@@ -1,15 +1,27 @@
-﻿<div class="row row-cols-1 row-cols-md-4 g-4">
+﻿@inject IECService ecService
 
-@foreach (var p in prodotti)
+@if (prodotti.Count == 0)
 {
-    <ProdottoPreview prodotto="@p" />
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        @foreach (var p in prodotti)
+        {
+            <ProdottoPreview prodotto="@p" />
+        }
+    </div>
 }
 
-</div>
 
 @code {
-    List<ProdottoModel> prodotti = [
-        new ProdottoModel{ Id=1, Nome="Ciabatte" },
-        new ProdottoModel{ Id=2, Nome="Bicicletta" }
-    ];
+    public List<ProdottoModel> prodotti { get; set; } = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        prodotti = await ecService.GetProdotti();
+    }
 }

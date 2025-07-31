@@ -5,7 +5,7 @@ namespace LabForWeb.EC.Blazor.Services;
 
 public interface IECService
 {
-    Task<IEnumerable<ProdottoModel>> GetProdotti();
+    Task<List<ProdottoModel>> GetProdotti();
 }
 
 public class ECService : IECService
@@ -17,7 +17,7 @@ public class ECService : IECService
         _http = http;
     }
 
-    public async Task<IEnumerable<ProdottoModel>> GetProdotti()
+    public async Task<List<ProdottoModel>> GetProdotti()
     {
         // chiamata ajax al server API per recuperare i prodotti in formato JSON
         var prodotti = await _http.GetFromJsonAsync<List<ProdottoModel>>("api/prodotti");
